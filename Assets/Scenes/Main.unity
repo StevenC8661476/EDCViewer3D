@@ -22390,9 +22390,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c31c0d5781a6ccc40969aa2ec4b48b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IronOre: {fileID: 0}
-  GoldOre: {fileID: 0}
-  DiamondOre: {fileID: 0}
+  IronMine: {fileID: 0}
+  GoldMine: {fileID: 0}
+  DiamondMine: {fileID: 0}
+  DiamondBlock: {fileID: 0}
+  IronBlock: {fileID: 0}
+  GoldBlock: {fileID: 0}
+  BlockScale: 0
+  MineScale: 0
 --- !u!4 &1927902727
 Transform:
   m_ObjectHideFlags: 0

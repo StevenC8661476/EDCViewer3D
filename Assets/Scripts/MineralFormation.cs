@@ -7,18 +7,28 @@ using UnityEngine;
 
 public class MineralFormation : MonoBehaviour
 {
-    public GameObject IronOre;
-    public GameObject GoldOre;
-    public GameObject DiamondOre;
+    public GameObject IronMine;
+    public GameObject GoldMine;
+    public GameObject DiamondMine;
+    public GameObject DiamondBlock;
+    public GameObject IronBlock;
+    public GameObject GoldBlock;
+
+    public float BlockScale;
+    public float MineScale;
 
     private void Start()
     {
-        DiamondOre = Resources.Load<GameObject>("Prefabs/Diamond/diamond1");
-        DiamondOre.transform.localScale = 5 * Vector3.one;
-        GoldOre = Resources.Load<GameObject>("Prefabs/Gold/gold_ingot1");
-        GoldOre.transform.localScale = 5 * Vector3.one;
-        IronOre = Resources.Load<GameObject>("Prefabs/Iron/iron_ingot1");
-        IronOre.transform.localScale = 5 * Vector3.one;
+        DiamondMine = Resources.Load<GameObject>("Prefabs/Diamond/diamond");
+        GoldMine = Resources.Load<GameObject>("Prefabs/Gold/gold_ingot");
+        IronMine = Resources.Load<GameObject>("Prefabs/Iron/iron_ingot");
+
+        DiamondBlock = Resources.Load<GameObject>("Prefabs/DiamondBlock/DiamondBlock");
+        GoldBlock = Resources.Load<GameObject>("Prefabs/GoldBlock/GoldBlock");
+        IronBlock = Resources.Load<GameObject>("Prefabs/IronBlock/IronBlock");
+
+        BlockScale = 1.0f;
+        MineScale = 1.0f;
     }
 
     public void OreFormation(CompetitionUpdate.Mine.OreType oreType, string mineId, Vector3 orePosition)
@@ -41,7 +51,9 @@ public class MineralFormation : MonoBehaviour
     {
         if (!Controller.Mines.ContainsKey(mineId))
         {
-            GameObject ironOre = Instantiate(IronOre, IronOrePosition, Quaternion.identity);
+            
+            GameObject ironOre = Instantiate(IronBlock, IronOrePosition+ Vector3.one* UnityEngine.Random.Range(-1.0f, 1.0f), Quaternion.identity);
+            ironOre.transform.localScale = Vector3.one* BlockScale;
             Controller.Mines.Add(mineId, ironOre);
         }
     }
@@ -52,7 +64,8 @@ public class MineralFormation : MonoBehaviour
     {
         if (!Controller.Mines.ContainsKey(mineId))
         {
-            GameObject goldOre = Instantiate(GoldOre, GoldMinePosition, Quaternion.identity);
+            GameObject goldOre = Instantiate(GoldBlock, GoldMinePosition, Quaternion.identity);
+            goldOre.transform.localScale = Vector3.one* BlockScale;
             Controller.Mines.Add(mineId, goldOre);
         }
     }
@@ -63,14 +76,15 @@ public class MineralFormation : MonoBehaviour
     {
         if (!Controller.Mines.ContainsKey(mineId))
         {
-            GameObject diamondOre = Instantiate(DiamondOre, DiamondMinePosition, Quaternion.identity);
+            GameObject diamondOre = Instantiate(DiamondBlock, DiamondMinePosition, Quaternion.identity);
+            diamondOre.transform.localScale = Vector3.one* BlockScale;
             Controller.Mines.Add(mineId, diamondOre);
         }
     }
 
     public void OreDestroy(string mineId,int playerId)
     {
-        Controller.Mines[mineId].transform.Translate(Controller.PlayerSteve[playerId].transform.position * Time.deltaTime);
+        Controller.Mines[mineId].transform.Translate((Controller.PlayerSteve[playerId].transform.position) * Time.deltaTime);
         float distance = Vector3.Distance(Controller.Mines[mineId].transform.position, Controller.PlayerSteve[playerId].transform.position);
         if(distance < 0.5f)
         {
