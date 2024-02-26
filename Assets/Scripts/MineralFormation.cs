@@ -27,7 +27,7 @@ public class MineralFormation : MonoBehaviour
         GoldBlock = Resources.Load<GameObject>("Prefabs/GoldBlock/GoldBlock");
         IronBlock = Resources.Load<GameObject>("Prefabs/IronBlock/IronBlock");
 
-        BlockScale = 1.0f;
+        BlockScale = 0.25f;
         MineScale = 1.0f;
     }
 
@@ -52,7 +52,7 @@ public class MineralFormation : MonoBehaviour
         if (!Controller.Mines.ContainsKey(mineId))
         {
             
-            GameObject ironOre = Instantiate(IronBlock, IronOrePosition+ Vector3.one* UnityEngine.Random.Range(-1.0f, 1.0f), Quaternion.identity);
+            GameObject ironOre = Instantiate(IronBlock, IronOrePosition, Quaternion.identity);
             ironOre.transform.localScale = Vector3.one* BlockScale;
             Controller.Mines.Add(mineId, ironOre);
         }
