@@ -15,7 +15,6 @@ public class SteveAnimation : MonoBehaviour
         _ator = Steve.GetComponent<Animator>();
     }
 
-    
     public void Run(Vector3 target,float speed)
     {
         Steve = gameObject;
@@ -24,7 +23,7 @@ public class SteveAnimation : MonoBehaviour
         if (Steve.transform.position != target)
         {
             float RotationSpeed = 1f;
-            Steve.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(target), RotationSpeed);
+            Steve.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(target - Steve.transform.position), RotationSpeed);
             Steve.transform.position=Vector3.MoveTowards(transform.position,target, speed * Time.deltaTime);
             _ator.Play("SteveRun");
         }
