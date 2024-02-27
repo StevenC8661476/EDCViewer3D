@@ -28,7 +28,7 @@ public class MineralFormation : MonoBehaviour
         IronBlock = Resources.Load<GameObject>("Prefabs/IronBlock/IronBlock");
 
         BlockScale = 0.25f;
-        MineScale = 1.0f;
+        MineScale = 4.0f;
     }
 
     public void OreFormation(CompetitionUpdate.Mine.OreType oreType, string mineId, Vector3 orePosition)
@@ -79,6 +79,39 @@ public class MineralFormation : MonoBehaviour
             GameObject diamondOre = Instantiate(DiamondBlock, DiamondMinePosition, Quaternion.identity);
             diamondOre.transform.localScale = Vector3.one* BlockScale;
             Controller.Mines.Add(mineId, diamondOre);
+        }
+    }
+
+    public void UpdateOreInfo(CompetitionUpdate.Mine.OreType oreType, string mineId, int accumulatedOreCount)
+    {
+        if (Controller.Mines.ContainsKey(mineId))
+        {
+            Controller.OccumulatedOreCounts[mineId] = accumulatedOreCount;
+            if (!Controller.Ores.ContainsKey(mineId))
+            {
+                Controller.Ores.Add(mineId, new());
+            }
+            while (Controller.Ores[mineId].Count < accumulatedOreCount)
+            {
+                GameObject ore = Instantiate(
+                    oreType switch
+                    {
+                        CompetitionUpdate.Mine.OreType.DiamondOre => DiamondMine,
+                        CompetitionUpdate.Mine.OreType.GoldOre => GoldMine,
+                        CompetitionUpdate.Mine.OreType.IronOre => IronMine,
+                        _ => throw new ArgumentOutOfRangeException($"OreType {oreType} is not defined.")
+                    },
+                    Controller.Mines[mineId].transform.position + new Vector3(0, 0.2f, 0),
+                    Quaternion.identity
+                );
+                ore.transform.localScale = Vector3.one * MineScale;
+                Controller.Ores[mineId].Add(ore);
+            }
+            while (Controller.Ores[mineId].Count > accumulatedOreCount)
+            {
+                Destroy(Controller.Ores[mineId][0]);
+                Controller.Ores[mineId].RemoveAt(0);
+            }
         }
     }
 

@@ -23,6 +23,8 @@ public class Controller : MonoBehaviour
     public static Dictionary<int, PlayerProperty> PlayerAttributes = new Dictionary<int, PlayerProperty>();
     public static Dictionary<int, InventoryManager> PlayerInventory = new Dictionary<int, InventoryManager>();
     public static Dictionary<string, GameObject> Mines = new Dictionary<string,GameObject>();
+    public static Dictionary<string, int> OccumulatedOreCounts = new();
+    public static Dictionary<string, List<GameObject>> Ores = new();
 
     private void Start()
     {
@@ -172,6 +174,11 @@ public class Controller : MonoBehaviour
                         competitionUpdate.mines[i].oreType,
                         competitionUpdate.mines[i].mineId,
                         new Vector3(competitionUpdate.mines[i].position.x + 0.5f, 0.75f, competitionUpdate.mines[i].position.y + 0.5f)
+                    );
+                    mineralFormation.UpdateOreInfo(
+                        competitionUpdate.mines[i].oreType,
+                        competitionUpdate.mines[i].mineId,
+                        competitionUpdate.mines[i].accumulatedOreCount
                     );
                 }
 
