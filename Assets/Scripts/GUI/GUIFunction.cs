@@ -9,6 +9,7 @@ using Client = EDCViewer.Client.Client;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 public class GUIFuntion : MonoBehaviour
 {
@@ -186,6 +187,29 @@ public class GUIFuntion : MonoBehaviour
                 };
                 Client.Send(competitionControlCommand);
             }
+
+            foreach (KeyValuePair<string, GameObject> kvp in Controller.Mines)
+            {
+                Debug.Log($"Destroying mine with id {kvp.Key}");
+                Destroy(kvp.Value);
+            }
+            
+            foreach (KeyValuePair<string, List<GameObject>> kvp in Controller.Ores)
+            {
+                Debug.Log($"Destroying ores of mine with id {kvp.Key}");
+                foreach (GameObject ore in kvp.Value)
+                {
+                    Destroy(ore);
+                }
+            }
+
+            foreach (KeyValuePair<string, GameObject> kvp in Controller.Mines)
+            {
+                Destroy(kvp.Value);
+            }
+            Controller.Mines.Clear();
+            Controller.Ores.Clear();
+            Controller.OccumulatedOreCounts.Clear();
         });
 
         _settingsButton.onClick.AddListener(() =>

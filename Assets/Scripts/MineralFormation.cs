@@ -51,7 +51,7 @@ public class MineralFormation : MonoBehaviour
     {
         if (!Controller.Mines.ContainsKey(mineId))
         {
-            
+            Debug.Log($"Creating IronMine with id {mineId}");
             GameObject ironOre = Instantiate(IronBlock, IronOrePosition, Quaternion.identity);
             ironOre.transform.localScale = Vector3.one* BlockScale;
             Controller.Mines.Add(mineId, ironOre);
@@ -64,6 +64,7 @@ public class MineralFormation : MonoBehaviour
     {
         if (!Controller.Mines.ContainsKey(mineId))
         {
+            Debug.Log($"Creating GoldMine with id {mineId}");
             GameObject goldOre = Instantiate(GoldBlock, GoldMinePosition, Quaternion.identity);
             goldOre.transform.localScale = Vector3.one* BlockScale;
             Controller.Mines.Add(mineId, goldOre);
@@ -76,6 +77,7 @@ public class MineralFormation : MonoBehaviour
     {
         if (!Controller.Mines.ContainsKey(mineId))
         {
+            Debug.Log($"Creating DiamondMine with id {mineId}");
             GameObject diamondOre = Instantiate(DiamondBlock, DiamondMinePosition, Quaternion.identity);
             diamondOre.transform.localScale = Vector3.one* BlockScale;
             Controller.Mines.Add(mineId, diamondOre);
